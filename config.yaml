@@ -1,0 +1,9 @@
+filename: ./data/Sentences_75Agree.txt
+
+classes:  ['negative', 'neutral', 'positive']
+
+train_size: 0.8
+
+model : 'distilbert-base-uncased'
+
+freeze_pretrained_model: True
