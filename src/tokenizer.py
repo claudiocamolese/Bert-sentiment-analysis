@@ -3,24 +3,28 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 def tokenizer_processing(model, df_data):
+    """Computes the tokenizer using the specified model 
+
+    Args:
+        model (str): model of the hugging face library to upload
+        df_data (pandas dataframe): dataset
+
+    Returns:
+        tokenizer: tokenizer model
+    """
     tokenizer = DistilBertTokenizer.from_pretrained(model, padding=True, truncation=True)
-    # let's check out how the tokenizer works
     all_texts = df_data['sentence'].tolist()
-
-    # Calcola la lunghezza in token di ciascuna frase
     lengths = [len(tokenizer.encode(text, add_special_tokens=True)) for text in all_texts]
-
-    # Statistiche
-    print(f"Lunghezza media: {np.mean(lengths):.1f}")
-    print(f"Lunghezza mediana: {np.median(lengths):.1f}")
-    print(f"Lunghezza massima: {np.max(lengths)}")
-
-    # Istogramma delle lunghezze
+    
+    print(f"average lenght: {np.mean(lengths):.1f}")
+    print(f"median lenght: {np.median(lengths):.1f}")
+    print(f"max lenght: {np.max(lengths)}")
+    
     plt.figure(figsize=(10,5))
     plt.hist(lengths, bins=50, color='skyblue', edgecolor='black')
-    plt.title("Distribuzione lunghezze delle frasi in token")
-    plt.xlabel("Numero di token")
-    plt.ylabel("Frequenza")
+    plt.title("Lenght Distribution of sentences in tokens")
+    plt.xlabel("Number of tokens")
+    plt.ylabel("Frequency")
     plt.savefig("./plot/freq_tok")
     
     return tokenizer
